@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { facultyApi, examApi } from '../../services/api';
+import { facultyApi, examApi, API_BASE_URL } from '../../services/api';
 import IntegrityDossierModal from './IntegrityDossierModal';
 import {
   Award,
@@ -135,7 +135,7 @@ export default function FacultyResultsPage() {
 
   const handleDownloadPDF = () => {
     if (!selectedExamId) return;
-    let url = `/api/faculty/reports/${selectedExamId}?format=pdf`;
+    let url = `${API_BASE_URL}/api/faculty/reports/${selectedExamId}?format=pdf`;
     if (filterDept) url += `&department=${encodeURIComponent(filterDept)}`;
     if (filterSection) url += `&classSection=${encodeURIComponent(filterSection)}`;
     if (filterSlot) url += `&slotId=${encodeURIComponent(filterSlot)}`;

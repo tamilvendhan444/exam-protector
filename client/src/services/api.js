@@ -2,7 +2,8 @@
  * API client service for EduProctor AI
  */
 
-const BASE_URL = '/api';
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+const BASE_URL = API_BASE_URL ? (API_BASE_URL.endsWith('/api') ? API_BASE_URL : `${API_BASE_URL}/api`) : '/api';
 
 export async function request(endpoint, options = {}) {
   const token = localStorage.getItem('eduproctor_token');
@@ -94,6 +95,7 @@ export const examApi = {
   getSlots: (id) => request(`/exams/${id}/slots`),
   updateSlot: (examId, slotId, data) => request(`/exams/${examId}/slots/${slotId}`, { method: 'PATCH', body: data }),
   startAttempt: (id, payload = {}) => request(`/exams/${id}/start`, { method: 'POST', body: payload }),
+  validateRollNumber: (id, payload) => request(`/exams/${id}/validate-roll-number`, { method: 'POST', body: payload }),
   saveLivenessCheck: (id, payload) => request(`/exams/${id}/liveness-check`, { method: 'POST', body: payload }),
   autoSaveAnswer: (id, payload) => request(`/exams/${id}/autosave`, { method: 'POST', body: payload }),
   submitExam: (id, payload) => request(`/exams/${id}/submit`, { method: 'POST', body: payload }),

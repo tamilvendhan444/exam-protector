@@ -23,7 +23,8 @@ export function SocketProvider({ children }) {
     let disconnectTimer = null;
     let disconnectedSince = null;
 
-    const socketInstance = io(window.location.origin, {
+    const socketServerUrl = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '') || window.location.origin;
+    const socketInstance = io(socketServerUrl, {
       transports: ['websocket', 'polling'],
       reconnectionAttempts: 10,
       reconnectionDelay: 1000

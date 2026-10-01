@@ -107,15 +107,7 @@ export default function ExamInstructionsPage() {
     setErrorMsg('');
 
     try {
-      const res = await fetch(`/api/exams/${id}/validate-roll-number`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('eduproctor_token')}`
-        },
-        body: JSON.stringify({ rollNumber: rollNumber.trim().toUpperCase() })
-      });
-      const data = await res.json();
+      const data = await examApi.validateRollNumber(id, { rollNumber: rollNumber.trim().toUpperCase() });
       if (data.success) {
         navigate(`/student/exams/${id}/system-check`, {
           state: { rollNumber: rollNumber.trim().toUpperCase() }

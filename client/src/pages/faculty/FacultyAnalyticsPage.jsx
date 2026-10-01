@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { facultyApi, examApi } from '../../services/api';
+import { facultyApi, examApi, API_BASE_URL } from '../../services/api';
 import {
   ResponsiveContainer,
   BarChart,
@@ -280,7 +280,7 @@ export default function FacultyAnalyticsPage() {
     const targetDept = deptToDownload === 'All' ? '' : deptToDownload;
     setDownloadingDept(deptToDownload);
 
-    let url = `/api/faculty/reports/${selectedExamId}?format=pdf`;
+    let url = `${API_BASE_URL}/api/faculty/reports/${selectedExamId}?format=pdf`;
     if (targetDept) {
       url += `&department=${encodeURIComponent(targetDept)}`;
     }
